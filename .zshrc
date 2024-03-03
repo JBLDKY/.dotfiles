@@ -9,6 +9,9 @@ ZSH_THEME="gruvbox"
 SOLARIZED_THEME="dark"
 export ZSH="$HOME/.oh-my-zsh"
 
+# neovim
+export PATH=$PATH:$HOME/nvim-linux64/bin/
+
 # git
 plugins=(git)
 
@@ -27,6 +30,9 @@ export NVM_DIR="$HOME/.nvm"
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/home/jord/Downloads/
+
+# Neovim
+export PATH=$PATH:/home/jord/nvim/bin/
 
 # Elixir
 . "$HOME/.asdf/asdf.sh"
