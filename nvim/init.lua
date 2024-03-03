@@ -114,7 +114,7 @@ require('lazy').setup({
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim',  opts = {} },
+  { 'folke/which-key.nvim',    opts = {} },
   {
     -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -199,6 +199,9 @@ require('lazy').setup({
   },
 
   { 'mg979/vim-visual-multi' },
+
+  -- rust-tools
+  { 'simrat39/rust-tools.nvim' },
 
   -- leap.nvim
   {
@@ -671,13 +674,39 @@ local servers = {
   -- gopls = {},
   pyright = {},
   rust_analyzer = {
-    settings = {
-      ["rust-analyzer"] = {
-        diagnostics = {
-          disabled = { "inactive-code" },
-        },
-      },
-
+    server = {
+      -- standalone file support
+      -- setting it to false may improve startup time
+      standalone = true,
+      settings = {
+        ['rust-analyzer'] = {
+          imports = {
+            granularity = {
+              group = "module",
+            },
+            prefix = "self",
+          },
+          cargo = {
+            features = { "ssr" },
+            loadOutDirsFromCheck = true,
+            buildScripts = {
+              enable = true,
+            }
+          },
+          check = {
+            features = { "ssr" },
+          },
+          -- Add clippy lints for Rust.
+          checkOnSave = {
+            features = { "ssr" },
+            command = "clippy",
+            extraArgs = { "--no-deps" },
+          },
+          procMacro = {
+            enable = false,
+          },
+        }, -- rust-analyzer options
+      }
     }
   },
   -- tsserver = {},
@@ -717,6 +746,46 @@ mason_lspconfig.setup_handlers {
     }
   end,
 }
+
+-- rust-tools
+local rt = require("rust-tools")
+
+rt.setup({
+  server = {
+    -- standalone file support
+    -- setting it to false may improve startup time
+    standalone = true,
+    settings = {
+      ['rust-analyzer'] = {
+        imports = {
+          granularity = {
+            group = "module",
+          },
+          prefix = "self",
+        },
+        cargo = {
+          features = { "ssr" },
+          loadOutDirsFromCheck = true,
+          buildScripts = {
+            enable = true,
+          }
+        },
+        check = {
+          features = { "ssr" },
+        },
+        -- Add clippy lints for Rust.
+        checkOnSave = {
+          features = { "ssr" },
+          command = "clippy",
+          extraArgs = { "--no-deps" },
+        },
+        procMacro = {
+          enable = true,
+        },
+      }, -- rust-analyzer options
+    }
+  }
+})
 
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
