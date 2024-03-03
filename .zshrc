@@ -51,6 +51,9 @@ function new_cd() {
     echo "Alias $alias_name added for $current_dir"
 }
 
+# Zoxide
+eval "$(zoxide init zsh)"     
+
 # Aliases
 alias inv='cd /home/jord/projects/invaders'
 alias sinv='cd /home/jord/projects/sinvaders'
